@@ -49,4 +49,8 @@ dependencies {
     // retrofit2 dependency
     implementation "com.squareup.retrofit2:retrofit:$retrofit_ver"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_ver"
+
+    // coroutine dependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
 }
