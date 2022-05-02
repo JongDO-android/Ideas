@@ -10,6 +10,9 @@ buildscript {
 
         classpath "com.android.tools.build:gradle:7.0.4"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+
+        // hilt
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40'
     }
 }
 
