@@ -1,5 +1,6 @@
 package android.ideas.localweather.remote
 
+import android.ideas.localweather.remote.dto.ConsolidatedWeather
 import android.ideas.localweather.remote.dto.LocalInformation
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -10,5 +11,5 @@ interface LocalWeatherService {
     fun fetchLocalInfo(@Query("query") query: String): LocalInformation
 
     @GET("/api/location/{woeid}")
-    fun fetchLocalWeather(@Path("woeid") woeId: Long)
+    fun fetchLocalWeather(@Path("woeid") woeId: Long): ConsolidatedWeather
 }
