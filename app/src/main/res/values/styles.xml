@@ -6,4 +6,19 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="WeatherName">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    
+    <style name="WeatherTemperature">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/thick_orange</item>
+    </style>
+
+    <style name="WeatherHumidity">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>
