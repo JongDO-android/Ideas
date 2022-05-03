@@ -39,7 +39,13 @@ class MainActivity : AppCompatActivity() {
             val gridLayoutManager = GridLayoutManager(this@MainActivity, 3)
             rvLocalWeather.layoutManager = gridLayoutManager
             rvLocalWeather.adapter = weatherAdapter
+
+            srLocalWeather.setOnRefreshListener {
+                mainViewModel.fetchLocalInfo()
+                srLocalWeather.isRefreshing = false
+            }
         }
+
         mainViewModel.localWeather.observe(this) {
             weatherAdapter.submitList(it)
         }
