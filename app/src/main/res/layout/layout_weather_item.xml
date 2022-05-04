@@ -6,20 +6,22 @@
 
         <variable
             name="weather"
-            type="android.ideas.localweather.data.WeatherItem.Weather" />
+            type="android.ideas.localweather.remote.dto.LocalWeather" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:background="@drawable/weather_item_background">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_weather_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_margin="5dp"
-            app:icon="@{weather.localWeather.weatherStateAbbr}"
+            app:icon="@{weather.weatherStateAbbr}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="@{weather.localWeather.weatherStateName}"
+            android:text="@{weather.weatherStateName}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_weather_icon"
             app:layout_constraintTop_toTopOf="@id/iv_weather_icon" />
@@ -47,7 +49,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_weather_name"
             app:layout_constraintTop_toBottomOf="@id/tv_weather_name"
-            app:temperature="@{weather.localWeather.theTemp}" />
+            app:temperature="@{weather.theTemp}" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
@@ -55,7 +57,7 @@
             android:layout_marginStart="10dp"
             android:gravity="center_vertical"
             android:text="@string/humidity_default"
-            app:humidity="@{weather.localWeather.humidity}"
+            app:humidity="@{weather.humidity}"
             app:layout_constraintBottom_toBottomOf="@id/tv_the_temp"
             app:layout_constraintEnd_toEndOf="@id/tv_weather_name"
             app:layout_constraintStart_toEndOf="@id/tv_the_temp"
