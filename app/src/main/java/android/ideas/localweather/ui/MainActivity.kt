@@ -1,11 +1,13 @@
 package android.ideas.localweather.ui
 
 import android.ideas.localweather.R
+import android.ideas.localweather.common.EventObserver
 import android.ideas.localweather.databinding.ActivityMainBinding
 import android.ideas.localweather.ui.adapter.WeatherAdapter
 import android.ideas.localweather.viewmodel.MainViewModel
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUiAttr() {
         mainViewModel.fetchLocalInfo()
-
+        // binding
         with(binding) {
             rvLocalWeather.adapter = weatherAdapter
 
@@ -43,9 +45,15 @@ class MainActivity : AppCompatActivity() {
                 srLocalWeather.isRefreshing = false
             }
         }
+        // observe
+        with(mainViewModel) {
+            localWeather.observe(this@MainActivity) { weatherItems ->
+                weatherAdapter.submitList(weatherItems)
+            }
 
-        mainViewModel.localWeather.observe(this) {
-            weatherAdapter.submitList(it)
+            errorMessage.observe(this@MainActivity, EventObserver { message ->
+                Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+            })
         }
     }
 }

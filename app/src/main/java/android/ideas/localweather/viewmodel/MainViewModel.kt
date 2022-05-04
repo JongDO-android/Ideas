@@ -1,12 +1,9 @@
 package android.ideas.localweather.viewmodel
-
+import android.ideas.localweather.common.Event
 import android.ideas.localweather.data.WeatherItem
 import android.ideas.localweather.remote.Result
 import android.ideas.localweather.repository.RemoteRepository
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +17,9 @@ class MainViewModel @Inject constructor(
     private val weatherItems = mutableListOf<WeatherItem>()
     private val _localWeathers = MutableLiveData<List<WeatherItem>>()
     val localWeather: LiveData<List<WeatherItem>> get() = _localWeathers
+
+    private val _errorMessage = MutableLiveData<Event<String>>()
+    val errorMessage: LiveData<Event<String>> get() = _errorMessage
 
     private val _isRequestDone = MutableLiveData(false)
     val isRequestDone: LiveData<Boolean> get() = _isRequestDone
@@ -37,6 +37,7 @@ class MainViewModel @Inject constructor(
                 }
             }
             is Result.Error -> {
+                _errorMessage.value = Event(ERROR_MESSAGE)
             }
         }
 
@@ -55,7 +56,7 @@ class MainViewModel @Inject constructor(
                 weatherItems.add(WeatherItem.Weather(title, todayWeather, tomorrowWeather))
             }
             is Result.Error -> {
-
+                _errorMessage.value = Event(ERROR_MESSAGE)
             }
         }
         _localWeathers.value = weatherItems.toList()
@@ -69,5 +70,6 @@ class MainViewModel @Inject constructor(
 
     companion object {
         const val DEFAULT_QUERY = "se"
+        const val ERROR_MESSAGE = "네트워크 환경을 확인해주세요."
     }
 }
