@@ -3,7 +3,15 @@ package android.ideas.localweather.data
 import android.ideas.localweather.remote.dto.LocalWeather
 
 sealed class WeatherItem {
-    data class Title(val title: String): WeatherItem()
-    data class WeatherLocal(val title: String): WeatherItem()
-    data class Weather(val localWeather: LocalWeather): WeatherItem()
+    data class Header(
+        val local: String = "Local",
+        val today: String = "Today",
+        val tomorrow: String = "Tomorrow"
+    ) : WeatherItem()
+
+    data class Weather(
+        val title: String,
+        val todayWeather: LocalWeather,
+        val tomorrowWeather: LocalWeather
+    ) : WeatherItem()
 }
