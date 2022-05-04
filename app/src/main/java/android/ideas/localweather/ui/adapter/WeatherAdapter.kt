@@ -7,23 +7,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import java.lang.Exception
 
-@Suppress("UNCHECKED_CAST")
+
 class WeatherAdapter: ListAdapter<WeatherItem, WeatherViewHolder<WeatherItem>>(WeatherDiffUtil) {
+    @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder<WeatherItem> {
         return when(ViewType.values()[viewType]) {
-            ViewType.DEFAULT_TITLE -> {
-                WeatherViewHolder.DefaultViewHolder(
-                    WeatherViewHolder.from(parent, R.layout.layout_weather_default)
+            ViewType.WEATHER_HEADER -> {
+                WeatherViewHolder.WeatherHeaderViewHolder(
+                    WeatherViewHolder.from(parent, R.layout.layout_weather_header)
                 )
             }
-            ViewType.LOCAL_TITLE -> {
-                WeatherViewHolder.TitleViewHolder(
-                    WeatherViewHolder.from(parent, R.layout.layout_local)
-                )
-            }
-            ViewType.WEATHER -> {
+            ViewType.WEATHER_ITEM -> {
                 WeatherViewHolder.WeatherItemViewHolder(
-                    WeatherViewHolder.from(parent, R.layout.layout_weather_item)
+                    WeatherViewHolder.from(parent, R.layout.layout_weather_total)
                 )
             }
         } as WeatherViewHolder<WeatherItem>
@@ -35,16 +31,14 @@ class WeatherAdapter: ListAdapter<WeatherItem, WeatherViewHolder<WeatherItem>>(W
 
     override fun getItemViewType(position: Int): Int {
         return when(getItem(position)) {
-            is WeatherItem.Title -> DEFAULT_TYPE
-            is WeatherItem.WeatherLocal -> TITLE_TYPE
-            is WeatherItem.Weather -> WEATHER_TYPE
+            is WeatherItem.Header -> WEATHER_HEADER_TYPE
+            is WeatherItem.Weather -> WEATHER_ITEM_TYPE
             else -> throw Exception("Unknown Type Item")
         }
     }
 
     companion object {
-        const val DEFAULT_TYPE = 0
-        const val TITLE_TYPE = 1
-        const val WEATHER_TYPE = 2
+        const val WEATHER_HEADER_TYPE = 0
+        const val WEATHER_ITEM_TYPE = 1
     }
 }
