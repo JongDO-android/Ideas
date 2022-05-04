@@ -3,6 +3,7 @@ import android.ideas.localweather.common.Event
 import android.ideas.localweather.data.WeatherItem
 import android.ideas.localweather.remote.Result
 import android.ideas.localweather.repository.RemoteRepository
+import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -31,20 +32,14 @@ class MainViewModel @Inject constructor(
             repository.fetchLocalInfo(DEFAULT_QUERY)
         }
         when(result) {
-            is Result.Success -> {
-                result.data.forEach {
-                    fetchWeatherInfo(it.woeId)
-                }
-            }
-            is Result.Error -> {
-                _errorMessage.value = Event(ERROR_MESSAGE)
-            }
+            is Result.Success -> result.data.map { fetchWeatherInfo(it.woeId) }
+            is Result.Error -> _errorMessage.value = Event(ERROR_MESSAGE)
         }
-
+        _localWeathers.value = weatherItems.toList()
         _isRequestDone.value = true
     }
 
-    private fun fetchWeatherInfo(woeId: Long) = viewModelScope.launch {
+    private suspend fun fetchWeatherInfo(woeId: Long) {
         val result = withContext(Dispatchers.IO) {
             repository.fetchWeatherInfo(woeId)
         }
@@ -55,11 +50,8 @@ class MainViewModel @Inject constructor(
                 val tomorrowWeather = result.data.consolidatedWeather[1]
                 weatherItems.add(WeatherItem.Weather(title, todayWeather, tomorrowWeather))
             }
-            is Result.Error -> {
-                _errorMessage.value = Event(ERROR_MESSAGE)
-            }
+            is Result.Error -> _errorMessage.value = Event(ERROR_MESSAGE)
         }
-        _localWeathers.value = weatherItems.toList()
     }
 
     private fun weatherItemsInit() {
