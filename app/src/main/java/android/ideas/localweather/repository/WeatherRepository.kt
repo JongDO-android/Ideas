@@ -3,7 +3,7 @@ package android.ideas.localweather.repository
 import android.ideas.localweather.remote.Result
 import android.ideas.localweather.remote.RetrofitBuilder
 import android.ideas.localweather.remote.dto.LocalInformation
-import android.ideas.localweather.remote.dto.LocalWeather
+import android.ideas.localweather.remote.dto.Weather
 import retrofit2.HttpException
 
 class WeatherRepository: RemoteRepository {
@@ -16,9 +16,9 @@ class WeatherRepository: RemoteRepository {
         }
     }
 
-    override suspend fun fetchWeatherInfo(woeId: Long): Result<List<LocalWeather>> {
+    override suspend fun fetchWeatherInfo(woeId: Long): Result<Weather> {
         return try {
-            Result.Success(retrofit.fetchLocalWeather(woeId).consolidatedWeather)
+            Result.Success(retrofit.fetchLocalWeather(woeId))
         } catch (e: HttpException) {
             Result.Error(e)
         }
