@@ -14,8 +14,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_local"
             android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            style="@style/WeatherHeader"
+            android:layout_height="0dp"
             android:text="@{weatherHeader.local}"
             android:background="@drawable/weather_item_background_default"
             android:gravity="center"
