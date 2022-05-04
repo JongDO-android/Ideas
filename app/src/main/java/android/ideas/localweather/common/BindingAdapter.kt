@@ -24,7 +24,7 @@ fun setWeatherTemperature(view: TextView, temperature: Double) {
     spannable.setSpan(
         StyleSpan(Typeface.BOLD),
         0,
-        4,
+        parsedTemp.getNumberIndex(),
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
 
@@ -38,7 +38,7 @@ fun setWeatherHumidity(view: TextView, humidity: Int) {
     spannable.setSpan(
         StyleSpan(Typeface.BOLD),
         0,
-        2,
+        parsedHumidity.getNumberIndex(),
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
 
@@ -52,4 +52,9 @@ fun Double.parseToTemperature(): String {
 
 fun Int.parseToHumidity(): String {
     return "${this}%"
+}
+
+fun String.getNumberIndex(): Int {
+    val regex = Regex("[^0-9.]")
+    return this.replace(regex, "").length
 }
