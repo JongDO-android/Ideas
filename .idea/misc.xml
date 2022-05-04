@@ -6,11 +6,13 @@
         <entry key="..\:/membership/LocalWeather/app/src/main/res/drawable/ic_launcher_background.xml" value="0.253" />
         <entry key="..\:/membership/LocalWeather/app/src/main/res/drawable/weather_item_background.xml" value="0.1155" />
         <entry key="..\:/membership/LocalWeather/app/src/main/res/drawable/weather_item_background_default.xml" value="0.253" />
-        <entry key="..\:/membership/LocalWeather/app/src/main/res/layout/activity_main.xml" value="0.17291666666666666" />
+        <entry key="..\:/membership/LocalWeather/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/membership/LocalWeather/app/src/main/res/layout/layout_local.xml" value="0.358695652173913" />
         <entry key="..\:/membership/LocalWeather/app/src/main/res/layout/layout_weather_default.xml" value="0.358695652173913" />
+        <entry key="..\:/membership/LocalWeather/app/src/main/res/layout/layout_weather_header.xml" value="0.358695652173913" />
         <entry key="..\:/membership/LocalWeather/app/src/main/res/layout/layout_weather_item.xml" value="0.358695652173913" />
         <entry key="..\:/membership/LocalWeather/app/src/main/res/layout/layout_weather_title.xml" value="0.358695652173913" />
+        <entry key="..\:/membership/LocalWeather/app/src/main/res/layout/layout_weather_total.xml" value="0.358695652173913" />
       </map>
     </option>
   </component>
