@@ -2,9 +2,7 @@ package android.ideas.localweather.viewmodel
 
 import android.ideas.localweather.data.WeatherItem
 import android.ideas.localweather.remote.Result
-import android.ideas.localweather.remote.dto.LocalWeather
 import android.ideas.localweather.repository.RemoteRepository
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,8 +32,8 @@ class MainViewModel @Inject constructor(
         }
         when(result) {
             is Result.Success -> {
-                result.data.map {
-                    fetchWeatherInfo(it.title, it.woeId)
+                result.data.forEach {
+                    fetchWeatherInfo(it.woeId)
                 }
             }
             is Result.Error -> {
@@ -45,15 +43,16 @@ class MainViewModel @Inject constructor(
         _isRequestDone.value = true
     }
 
-    private fun fetchWeatherInfo(title: String, woeId: Long) = viewModelScope.launch {
+    private fun fetchWeatherInfo(woeId: Long) = viewModelScope.launch {
         val result = withContext(Dispatchers.IO) {
             repository.fetchWeatherInfo(woeId)
         }
         when(result) {
             is Result.Success -> {
-                weatherItems.add(WeatherItem.WeatherLocal(title))
-                weatherItems.add(WeatherItem.Weather(result.data[0]))
-                weatherItems.add(WeatherItem.Weather(result.data[1]))
+                val title = result.data.title
+                val todayWeather = result.data.consolidatedWeather[0]
+                val tomorrowWeather = result.data.consolidatedWeather[1]
+                weatherItems.add(WeatherItem.Weather(title, todayWeather, tomorrowWeather))
             }
             is Result.Error -> {
 
@@ -65,15 +64,10 @@ class MainViewModel @Inject constructor(
     private fun weatherItemsInit() {
         weatherItems.clear()
         _localWeathers.value = weatherItems.toList()
-        weatherItems.add(WeatherItem.Title(LOCAL))
-        weatherItems.add(WeatherItem.Title(TODAY))
-        weatherItems.add(WeatherItem.Title(TOMORROW))
+        weatherItems.add(WeatherItem.Header())
     }
 
     companion object {
         const val DEFAULT_QUERY = "se"
-        const val LOCAL = "Local"
-        const val TODAY = "Today"
-        const val TOMORROW = "Tomorrow"
     }
 }
