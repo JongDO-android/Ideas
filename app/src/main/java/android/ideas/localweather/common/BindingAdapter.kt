@@ -20,27 +20,29 @@ fun setWeatherIcon(view: ImageView, abbr: String) {
 @BindingAdapter("app:temperature")
 fun setWeatherTemperature(view: TextView, temperature: Double) {
     val parsedTemp = temperature.parseToTemperature()
-    view.text = parsedTemp
-
-    val spannable = SpannableString(view.text)
+    val spannable = SpannableString(parsedTemp)
     spannable.setSpan(
         StyleSpan(Typeface.BOLD),
         0,
         4,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
+
+    view.text = spannable
 }
 
 @BindingAdapter("app:humidity")
 fun setWeatherHumidity(view: TextView, humidity: Int) {
-    view.text = humidity.parseToHumidity()
-    val spannable = SpannableString(view.text)
+    val parsedHumidity = humidity.parseToHumidity()
+    val spannable = SpannableString(parsedHumidity)
     spannable.setSpan(
         StyleSpan(Typeface.BOLD),
         0,
         2,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
+
+    view.text = spannable
 }
 
 
